@@ -3,15 +3,13 @@ import { json } from './parser'
 import { GameSaving } from './GameSaving';
 
 export class GameSavingLoader {
-  static load() {
-    return read()
-      .then(response => json(response))
-      .then(data => {
-        return new Promise(resolve => {
-          const parsedData = JSON.parse(data);
-          const savedGame = new GameSaving(parsedData);
-          resolve(savedGame);
-        })
-      })
+  static async load() {
+    const data = await read();
+    const value = await json(data);
+    return new Promise(resolve => {
+      const parsedData = JSON.parse(value);
+      const savedGame = new GameSaving(parsedData);
+      resolve(savedGame);
+    })
   }
 }
